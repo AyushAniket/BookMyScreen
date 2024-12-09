@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: user-service
+      username: root
+      password: password
+      authentication-database: admin
+      auto-index-creation: true
+      # MongoDB initialization
+      initialization-mode: always
+      data: classpath:db/mongo/roles.json
+
+server:
+  port: 0  # Dynamic port assignment
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info", "metrics"]
+  health:
+    circuitbreakers:
+      enabled: true
+
+# JWT Configuration
+security:
+  jwt:
+    secret-key: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
